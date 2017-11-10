@@ -7,3 +7,4 @@ mybatis-generator Chinese comment-generator
 -
 在generatorConfig.xml
 <>222
+1
