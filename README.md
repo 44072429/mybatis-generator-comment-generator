@@ -6,3 +6,4 @@ mybatis-generator Chinese comment-generator
 使用方法
 -
 在generatorConfig.xml
+<>
