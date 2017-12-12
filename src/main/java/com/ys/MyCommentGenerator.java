@@ -38,7 +38,6 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
         if (compilationUnit.isJavaInterface()) {
             // Mapper文件
             compilationUnit.addFileCommentLine( "import org.apache.ibatis.annotations.Mapper" );
-            compilationUnit.addFileCommentLine( "import org.apache.ibatis.annotations.Mapper" );
         }
     }
 
