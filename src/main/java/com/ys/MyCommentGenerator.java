@@ -3,6 +3,7 @@ package com.ys;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.config.PropertyRegistry;
@@ -37,7 +38,7 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         if (compilationUnit.isJavaInterface()) {
             // Mapper文件
-            compilationUnit.addFileCommentLine( "import org.apache.ibatis.annotations.Mapper" );
+            compilationUnit.addFileCommentLine( "import org.apache.ibatis.annotations.Mapper;" );
         }
     }
 
@@ -47,19 +48,19 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
      */
     @Override
     public void addComment(XmlElement xmlElement) {
-        return;
+        Attribute attribute = new Attribute("addComment","def");
+        xmlElement.addAttribute( attribute );
     }
 
     @Override
     public void addRootComment(XmlElement rootElement) {
-        // add no document level comments by default
-        return;
+        Attribute attribute = new Attribute("addRootComment","yyy");
+        rootElement.addAttribute( attribute );
     }
 
     @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll( properties );
-
         suppressDate = isTrue( properties.getProperty( PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE ) );
         suppressAllComments = isTrue( properties.getProperty( PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS ) );
     }
@@ -104,6 +105,9 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
         return result;
     }
 
+    /**
+     * Example类里的内部类会调用此处生成类注释
+     * */
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
         if (suppressAllComments) {

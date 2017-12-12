@@ -31,6 +31,8 @@ public class MyJavaMapperGenerator extends JavaMapperGenerator {
 
         commentGenerator.addJavaFileComment(interfaze);
 
+        interfaze.addJavaDocLine( " *** " );
+
         String rootInterface = introspectedTable.getTableConfigurationProperty( PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
