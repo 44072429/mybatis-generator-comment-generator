@@ -38,7 +38,9 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         if (compilationUnit.isJavaInterface()) {
             // Mapper文件
-            compilationUnit.addFileCommentLine( "import org.apache.ibatis.annotations.Mapper;" );
+            compilationUnit.addFileCommentLine( "// 这是Mapper接口文件" );
+        } else {
+            compilationUnit.addFileCommentLine( "// 这是Model类文件或Example类文件" );
         }
     }
 
@@ -48,13 +50,13 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
      */
     @Override
     public void addComment(XmlElement xmlElement) {
-        Attribute attribute = new Attribute("addComment","def");
+        Attribute attribute = new Attribute( "addComment", "def" );
         xmlElement.addAttribute( attribute );
     }
 
     @Override
     public void addRootComment(XmlElement rootElement) {
-        Attribute attribute = new Attribute("addRootComment","yyy");
+        Attribute attribute = new Attribute( "addRootComment", "yyy" );
         rootElement.addAttribute( attribute );
     }
 
@@ -107,7 +109,7 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
 
     /**
      * Example类里的内部类会调用此处生成类注释
-     * */
+     */
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
