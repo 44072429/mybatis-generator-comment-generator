@@ -21,7 +21,8 @@ public class MyMapperInterfacePlugin extends PluginAdapter {
                                    TopLevelClass topLevelClass,
                                    IntrospectedTable introspectedTable) {
 
-        interfaze.addJavaDocLine( "@Mapper" );
+        interfaze.addAnnotation( "@Abc" );
+       interfaze.addJavaDocLine( "@Mapper" );
 
         return true;
     }
