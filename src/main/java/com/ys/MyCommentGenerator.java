@@ -44,22 +44,6 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
         }
     }
 
-    /**
-     * Adds a suitable comment to warn users that the element was generated, and
-     * when it was generated.
-     */
-    @Override
-    public void addComment(XmlElement xmlElement) {
-        Attribute attribute = new Attribute( "addComment", "def" );
-        xmlElement.addAttribute( attribute );
-    }
-
-    @Override
-    public void addRootComment(XmlElement rootElement) {
-        Attribute attribute = new Attribute( "addRootComment", "yyy" );
-        rootElement.addAttribute( attribute );
-    }
-
     @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll( properties );
