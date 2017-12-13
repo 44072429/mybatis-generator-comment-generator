@@ -21,8 +21,9 @@ public class MyMapperInterfacePlugin extends PluginAdapter {
                                    TopLevelClass topLevelClass,
                                    IntrospectedTable introspectedTable) {
 
+        interfaze.addJavaDocLine( "import org.apache.ibatis.annotations.Mapper;" );
+        interfaze.addJavaDocLine( "" );
         interfaze.addAnnotation( "@Abc" );
-       interfaze.addJavaDocLine( "@Mapper" );
 
         return true;
     }
