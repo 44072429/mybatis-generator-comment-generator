@@ -23,7 +23,7 @@ public class MyMapperInterfacePlugin extends PluginAdapter {
 
         interfaze.addJavaDocLine( "import org.apache.ibatis.annotations.Mapper;" );
         interfaze.addJavaDocLine( "" );
-        interfaze.addAnnotation( "@Abc" );
+        interfaze.addAnnotation( "@Mapper" );
 
         return true;
     }
