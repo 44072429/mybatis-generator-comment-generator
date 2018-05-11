@@ -21,28 +21,50 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     }
 
 
+    /**
+     * Model文件被生成时候调用
+     * @param topLevelClass
+     * @param introspectedTable
+     * @return
+     */
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
                                                  IntrospectedTable introspectedTable) {
-        topLevelClass.addFileCommentLine( "Base 1" );
 
-        topLevelClass.addJavaDocLine( "Base 2" );
-        topLevelClass.addJavaDocLine( "Base 3" );
-        topLevelClass.addAnnotation( "Base 4" );
+        topLevelClass.addJavaDocLine( "import javax.persistence.*;" );
+//        topLevelClass.addJavaDocLine( "import org.apache.ibatis.annotations.Mapper;" );
+        topLevelClass.addJavaDocLine( "" );
+        topLevelClass.addAnnotation( "@Entity" );
         return true;
     }
 
+    /**
+     * 数据库每个字段被生成的时候会调用
+     * @param field
+     * @param topLevelClass
+     * @param introspectedColumn
+     * @param introspectedTable
+     * @param modelClassType
+     * @return
+     */
     @Override
     public boolean modelFieldGenerated(Field field,
                                        TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
                                        IntrospectedTable introspectedTable,
                                        Plugin.ModelClassType modelClassType) {
 
-        topLevelClass.addFileCommentLine( "Field 1" );
+        List<IntrospectedColumn> primaryKeyColumns = introspectedTable.getPrimaryKeyColumns();
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            if(column.getActualColumnName().equals( introspectedColumn.getActualColumnName()) ) {
+                field.addAnnotation( "@Id" );
+            }
+        }
 
-        topLevelClass.addJavaDocLine( "Field 2" );
-        topLevelClass.addJavaDocLine( "Field 3" );
-        topLevelClass.addAnnotation( "Field 4" );
+        if(introspectedColumn.isIdentity()) {
+            field.addAnnotation( "@GeneratedValue(strategy = GenerationType.AUTO)" );
+        }
+
+        field.addAnnotation( "@Column" );
         return true;
     }
 
