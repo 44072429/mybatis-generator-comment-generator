@@ -1,9 +1,6 @@
 package com.ys;
 
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.Plugin;
-import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.*;
 import org.mybatis.generator.api.dom.java.*;
 
 import java.util.List;
@@ -18,10 +15,17 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     }
 
     @Override
+    public boolean sqlMapGenerated(GeneratedXmlFile sqlMap,
+                                   IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
                                               IntrospectedTable introspectedTable) {
-        return true;
+        return false;
     }
+
     @Override
     public boolean clientCountByExampleMethodGenerated(Method method,
                                                        Interface interfaze, IntrospectedTable introspectedTable) {
