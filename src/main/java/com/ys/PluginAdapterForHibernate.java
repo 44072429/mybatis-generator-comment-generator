@@ -4,10 +4,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.PluginAdapter;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.*;
 
 import java.util.List;
 
@@ -36,6 +33,17 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addJavaDocLine( "" );
         topLevelClass.addAnnotation( "@Entity" );
         topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
+
+        // private static final long serialVersionUID = 1L;
+        Field serialVersionUID = new Field(  );
+        serialVersionUID.setVisibility( JavaVisibility.PRIVATE );
+        serialVersionUID.setStatic( true );
+        serialVersionUID.setFinal( true );
+        serialVersionUID.setType( new FullyQualifiedJavaType( "long" ) );
+        serialVersionUID.setName( "serialVersionUID" );
+        serialVersionUID.setInitializationString( "1L" );
+        topLevelClass.addField( new Field(  ) );
+
         return true;
     }
 
