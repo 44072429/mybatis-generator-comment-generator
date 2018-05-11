@@ -17,6 +17,54 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         return true;
     }
 
+    @Override
+    public boolean clientCountByExampleMethodGenerated(Method method,
+                                                       Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientCountByExampleMethodGenerated(Method method,
+                                                       TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
+                                                        Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
+                                                        TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
+                                                           Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
+                                                           TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
+                                               IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientInsertMethodGenerated(Method method,
+                                               TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
 
     /**
      * Model文件被生成时候调用
