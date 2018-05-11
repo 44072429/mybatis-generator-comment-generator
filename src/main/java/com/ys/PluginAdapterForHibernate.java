@@ -20,7 +20,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     @Override
     public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
                                               IntrospectedTable introspectedTable) {
-        return false;
+        return true;
     }
     @Override
     public boolean clientCountByExampleMethodGenerated(Method method,
@@ -94,15 +94,15 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         return false;
     }
 
-    @Override
-    public boolean clientGenerated(Interface interfaze,
-                                   TopLevelClass topLevelClass,
-                                   IntrospectedTable introspectedTable) {
-
-        topLevelClass.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
-
-        return true;
-    }
+//    @Override
+//    public boolean clientGenerated(Interface interfaze,
+//                                   TopLevelClass topLevelClass,
+//                                   IntrospectedTable introspectedTable) {
+//
+//        topLevelClass.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
+//
+//        return true;
+//    }
 
     /**
      * Model文件被生成时候调用
