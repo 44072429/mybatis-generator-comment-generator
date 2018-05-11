@@ -71,6 +71,12 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     }
 
     @Override
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
+                                                        Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
                                                                  Interface interfaze, IntrospectedTable introspectedTable) {
         return false;
@@ -108,13 +114,26 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     }
 
     @Override
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+                                                                    Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
+                                                           Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientGenerated(Interface interfaze,
                                    TopLevelClass topLevelClass,
                                    IntrospectedTable introspectedTable) {
 
-        interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.data.jpa.repository" ));
+        interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.stereotype.Repository" ));
+        interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository" ));
         interfaze.addAnnotation( "@Repository" );
-        interfaze.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
+        interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getTableName() + ",Integer"+ ">"));
 
         return true;
     }
