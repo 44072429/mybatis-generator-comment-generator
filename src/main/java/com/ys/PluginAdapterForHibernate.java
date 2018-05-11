@@ -137,7 +137,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.stereotype.Repository" ));
         interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository" ));
         interfaze.addAnnotation( "@Repository" );
-        interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getTableName() + ",Integer"+ ">"));
+        interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + ",Integer"+ ">"));
 
         return true;
     }
