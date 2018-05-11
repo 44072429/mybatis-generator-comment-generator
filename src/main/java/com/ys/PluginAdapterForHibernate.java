@@ -65,7 +65,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             field.addAnnotation( "@GeneratedValue(strategy = GenerationType.AUTO)" );
         }
 
-        field.addAnnotation( "@Column(\"" + introspectedColumn.getActualColumnName() + "\")" );
+        field.addAnnotation( "@Column(name=\"" + introspectedColumn.getActualColumnName() + "\")" );
         return true;
     }
 
