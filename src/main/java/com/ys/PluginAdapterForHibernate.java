@@ -35,14 +35,16 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
 
         // private static final long serialVersionUID = 1L;
-        Field serialVersionUID = new Field(  );
-        serialVersionUID.setVisibility( JavaVisibility.PRIVATE );
-        serialVersionUID.setStatic( true );
-        serialVersionUID.setFinal( true );
-        serialVersionUID.setType( new FullyQualifiedJavaType( "long" ) );
-        serialVersionUID.setName( "serialVersionUID" );
-        serialVersionUID.setInitializationString( "1L" );
-        topLevelClass.addField( new Field(  ) );
+
+        // 以下代码不需要调用，因为本来生成的model就带serialVersionUID
+//        Field serialVersionUID = new Field(  );
+//        serialVersionUID.setVisibility( JavaVisibility.PRIVATE );
+//        serialVersionUID.setStatic( true );
+//        serialVersionUID.setFinal( true );
+//        serialVersionUID.setType( new FullyQualifiedJavaType( "long" ) );
+//        serialVersionUID.setName( "serialVersionUID" );
+//        serialVersionUID.setInitializationString( "1L" );
+//        topLevelClass.addField( serialVersionUID );
 
         return true;
     }
