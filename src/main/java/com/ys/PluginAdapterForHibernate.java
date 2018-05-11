@@ -94,15 +94,21 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         return false;
     }
 
-//    @Override
-//    public boolean clientGenerated(Interface interfaze,
-//                                   TopLevelClass topLevelClass,
-//                                   IntrospectedTable introspectedTable) {
-//
-//        topLevelClass.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
-//
-//        return true;
-//    }
+    @Override
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+                                                                    Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientGenerated(Interface interfaze,
+                                   TopLevelClass topLevelClass,
+                                   IntrospectedTable introspectedTable) {
+
+        topLevelClass.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
+
+        return true;
+    }
 
     /**
      * Model文件被生成时候调用
