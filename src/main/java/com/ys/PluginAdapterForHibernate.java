@@ -155,9 +155,11 @@ public class PluginAdapterForHibernate extends PluginAdapter {
                                                  IntrospectedTable introspectedTable) {
 
         topLevelClass.addJavaDocLine( "import javax.persistence.*;" );
-//        topLevelClass.addJavaDocLine( "import org.apache.ibatis.annotations.Mapper;" );
+        topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
+
         topLevelClass.addJavaDocLine( "" );
         topLevelClass.addAnnotation( "@Entity" );
+        topLevelClass.addAnnotation( "@ApiModel" );
         topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
 
         // private static final long serialVersionUID = 1L;
@@ -202,6 +204,8 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         }
 
         field.addAnnotation( "@Column(name=\"" + introspectedColumn.getActualColumnName() + "\")" );
+        field.addAnnotation( "@ApiModelProperty(value=\"" + introspectedColumn.getRemarks() + "\")" );
+
         return true;
     }
 

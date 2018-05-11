@@ -35,16 +35,6 @@ public class MyCommentGenerator extends DefaultCommentGenerator {
     }
 
     @Override
-    public void addJavaFileComment(CompilationUnit compilationUnit) {
-        if (compilationUnit.isJavaInterface()) {
-            // Mapper文件
-            compilationUnit.addFileCommentLine( "// 这是Mapper接口文件" );
-        } else {
-            compilationUnit.addFileCommentLine( "// 这是Model类文件或Example类文件" );
-        }
-    }
-
-    @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll( properties );
         suppressDate = isTrue( properties.getProperty( PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE ) );
