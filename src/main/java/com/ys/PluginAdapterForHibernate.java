@@ -60,7 +60,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             }
         }
 
-        if(introspectedColumn.isIdentity()) {
+        if(introspectedColumn.isAutoIncrement()) {
             field.addAnnotation( "@GeneratedValue(strategy = GenerationType.AUTO)" );
         }
 
