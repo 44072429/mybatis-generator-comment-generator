@@ -35,6 +35,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 //        topLevelClass.addJavaDocLine( "import org.apache.ibatis.annotations.Mapper;" );
         topLevelClass.addJavaDocLine( "" );
         topLevelClass.addAnnotation( "@Entity" );
+        topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
         return true;
     }
 
