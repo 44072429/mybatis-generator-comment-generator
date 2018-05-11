@@ -156,6 +156,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         topLevelClass.addJavaDocLine( "import javax.persistence.*;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
+        topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
 
         topLevelClass.addJavaDocLine( "" );
         topLevelClass.addAnnotation( "@Entity" );
