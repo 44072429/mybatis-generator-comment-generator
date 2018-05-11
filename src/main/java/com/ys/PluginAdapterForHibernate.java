@@ -105,7 +105,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
                                    TopLevelClass topLevelClass,
                                    IntrospectedTable introspectedTable) {
 
-        topLevelClass.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
+        interfaze.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
 
         return true;
     }
