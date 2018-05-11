@@ -101,10 +101,19 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     }
 
     @Override
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+            Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientGenerated(Interface interfaze,
                                    TopLevelClass topLevelClass,
                                    IntrospectedTable introspectedTable) {
 
+        interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.data.jpa.repository" ));
+        interfaze.addAnnotation( "@Repository" );
         interfaze.addSuperInterface( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository<" + introspectedTable.getTableConfiguration().getMapperName() + ",Integer"+ ">"));
 
         return true;
