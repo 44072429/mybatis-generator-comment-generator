@@ -111,6 +111,30 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     }
 
     @Override
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
+                                                                 Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
+                                                                 TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+                                                                    Interface interfaze, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+                                                                    TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
                                                                  Interface interfaze, IntrospectedTable introspectedTable) {
         return false;
