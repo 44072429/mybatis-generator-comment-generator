@@ -201,11 +201,11 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
         boolean hasDateColumn = false;
-        // 生成findAllByXXX方法
+        // 生成findByXXX方法
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
 
-            String methodName = "findAllBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
+            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
             Method method = new Method( methodName );
             method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
 
@@ -223,11 +223,11 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             }
         }
 
-        // 生成findAllByXXXIn方法
+        // 生成findByXXXIn方法
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
 
-            String methodName = "findAllBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 ) + "In";
+            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 ) + "In";
             Method method = new Method( methodName );
             method.addParameter( new Parameter( new FullyQualifiedJavaType( "Collection<" +column.getFullyQualifiedJavaType().getShortName() +">" ), column.getJavaProperty() + "s") );
 
