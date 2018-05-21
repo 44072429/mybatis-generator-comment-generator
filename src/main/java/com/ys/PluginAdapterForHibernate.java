@@ -172,6 +172,8 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.stereotype.Repository" ));
         interfaze.addImportedType( new FullyQualifiedJavaType("org.springframework.data.jpa.repository.JpaRepository" ));
+        interfaze.addImportedType( new FullyQualifiedJavaType("java.util.List" ));
+        interfaze.addImportedType( new FullyQualifiedJavaType("java.util.Collection" ));
 
         interfaze.addAnnotation( "@Repository" );
 
@@ -197,9 +199,8 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + entityName + ","+ entityKeyName +">"));
 
-        // 生成方法
-        // e.g. List<PointEntity> findByDeviceIdIn(Collection<Integer> deviceIds);
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+        // 生成findAllByXXX方法
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
 
@@ -217,6 +218,23 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             interfaze.addMethod( method );
         }
 
+        // 生成findAllByXXXIn方法
+        for(IntrospectedColumn column : allColumns) {
+            String property = column.getJavaProperty();
+
+            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 ) + "In";
+            Method method = new Method( methodName );
+            method.addParameter( new Parameter( new FullyQualifiedJavaType( "Collection<" +column.getFullyQualifiedJavaType().getShortName() +">" ), column.getJavaProperty() + "s") );
+
+            method.addJavaDocLine( "/**" );
+            method.addJavaDocLine( " * 数据库字段" + column.getActualColumnName() + ",属性名称" + property);
+            method.addJavaDocLine( " * @param " +property + " " + column.getRemarks() );
+            method.addJavaDocLine( " */" );
+
+            method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
+
+            interfaze.addMethod( method );
+        }
         return true;
     }
 
