@@ -252,6 +252,10 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         // 当某个表有多个主键时候 会生成一个 TabUserKey的一个专门表示主键的类
 
+        topLevelClass.addJavaDocLine( "import javax.persistence.*;" );
+        topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
+        topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
+
         return true;
     }
 }
