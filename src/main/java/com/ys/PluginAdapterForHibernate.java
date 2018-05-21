@@ -239,6 +239,10 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
 
             interfaze.addMethod( method );
+
+            if(column.getFullyQualifiedJavaType().getShortName().equals("Date"  )) {
+                hasDateColumn = true;
+            }
         }
 
         if(hasDateColumn) {
