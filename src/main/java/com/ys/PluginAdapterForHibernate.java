@@ -324,6 +324,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             topLevelClass.addAnnotation( "@Entity" );
             topLevelClass.addAnnotation( "@ApiModel" );
             topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
+            topLevelClass.addAnnotation( "@IdClass(" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key.class)" );
         }
 
         return true;
