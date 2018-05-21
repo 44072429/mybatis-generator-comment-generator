@@ -228,7 +228,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
             method.addJavaDocLine( "/**" );
             method.addJavaDocLine( " * 数据库字段" + column.getActualColumnName() + ",属性名称" + property);
-            method.addJavaDocLine( " * @param " +property + " " + column.getRemarks() );
+            method.addJavaDocLine( " * @param " +property + "s " + column.getRemarks() );
             method.addJavaDocLine( " */" );
 
             method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
