@@ -201,9 +201,9 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         // e.g. List<PointEntity> findByDeviceIdIn(Collection<Integer> deviceIds);
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
         for(IntrospectedColumn column : allColumns) {
-            String methodName = "findBy" + column.getActualColumnName();
+            String methodName = column.getJavaProperty("findBy");
             Method method = new Method( methodName );
-            method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getActualColumnName()) );
+            method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
             interfaze.addMethod( method );
         }
 
@@ -229,6 +229,10 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addAnnotation( "@ApiModel" );
         topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
 
+
+        if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
+            topLevelClass.addAnnotation( "@IdClass(" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key)" );
+        }
         // private static final long serialVersionUID = 1L;
 
         // 以下代码不需要调用，因为本来生成的model就带serialVersionUID
@@ -285,6 +289,12 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addJavaDocLine( "import javax.persistence.*;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
+
+        if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
+            topLevelClass.addAnnotation( "@Entity" );
+            topLevelClass.addAnnotation( "@ApiModel" );
+            topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
+        }
 
         return true;
     }
