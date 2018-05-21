@@ -250,11 +250,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
     public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass,
                                                  IntrospectedTable introspectedTable) {
 
-        topLevelClass.addFileCommentLine( "modelPrimaryKeyClassGenerated 1" );
-
-        topLevelClass.addJavaDocLine( "modelPrimaryKeyClassGenerated 2" );
-        topLevelClass.addJavaDocLine( "modelPrimaryKeyClassGenerated 3" );
-        topLevelClass.addAnnotation( "modelPrimaryKeyClassGenerated 4" );
+        // 当某个表有多个主键时候 会生成一个 TabUserKey的一个专门表示主键的类
 
         return true;
     }
