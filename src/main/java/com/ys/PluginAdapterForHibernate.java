@@ -200,6 +200,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + entityName + ","+ entityKeyName +">"));
 
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+        boolean hasDateColumn = false;
         // 生成findAllByXXX方法
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
@@ -216,6 +217,10 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
 
             interfaze.addMethod( method );
+
+            if(column.getFullyQualifiedJavaType().getShortName().equals("Date"  )) {
+                hasDateColumn = true;
+            }
         }
 
         // 生成findAllByXXXIn方法
@@ -235,6 +240,11 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
             interfaze.addMethod( method );
         }
+
+        if(hasDateColumn) {
+            interfaze.addImportedType( new FullyQualifiedJavaType("java.util.Data" ));
+        }
+
         return true;
     }
 
