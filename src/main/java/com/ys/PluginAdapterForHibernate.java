@@ -2,6 +2,7 @@ package com.ys;
 
 import org.mybatis.generator.api.*;
 import org.mybatis.generator.api.dom.java.*;
+import org.mybatis.generator.internal.rules.ConditionalModelRules;
 
 import java.util.List;
 
@@ -10,6 +11,34 @@ import java.util.List;
  */
 public class PluginAdapterForHibernate extends PluginAdapter {
 
+    class MyRules extends ConditionalModelRules {
+
+        /**
+         * Instantiates a new conditional model rules.
+         *
+         * @param introspectedTable the introspected table
+         */
+        public MyRules(IntrospectedTable introspectedTable) {
+            super( introspectedTable );
+        }
+
+        @Override
+        public boolean generateBaseRecordClass() {
+//            return introspectedTable.hasBaseColumns()
+//                    || introspectedTable.getPrimaryKeyColumns().size() == 1
+//                    || blobsAreInBaseRecord();
+
+            return true;
+        }
+    }
+
+    @Override
+    public void initialized(IntrospectedTable introspectedTable) {
+        super.initialized( introspectedTable );
+
+        introspectedTable.setRules( new MyRules(introspectedTable) );
+
+    }
     public boolean validate(List<String> warnings) {
         return true;
     }
@@ -320,12 +349,12 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
 
-        if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
-            topLevelClass.addAnnotation( "@Entity" );
-            topLevelClass.addAnnotation( "@ApiModel" );
-            topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
-            topLevelClass.addAnnotation( "@IdClass(" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key.class)" );
-        }
+//        if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
+//            topLevelClass.addAnnotation( "@Entity" );
+//            topLevelClass.addAnnotation( "@ApiModel" );
+//            topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
+//            topLevelClass.addAnnotation( "@IdClass(" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key.class)" );
+//        }
 
         return true;
     }
