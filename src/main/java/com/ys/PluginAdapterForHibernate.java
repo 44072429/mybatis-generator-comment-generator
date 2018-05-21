@@ -201,7 +201,9 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         // e.g. List<PointEntity> findByDeviceIdIn(Collection<Integer> deviceIds);
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
         for(IntrospectedColumn column : allColumns) {
-            String methodName = column.getJavaProperty("findBy");
+            String property = column.getJavaProperty();
+
+            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
             Method method = new Method( methodName );
             method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
             interfaze.addMethod( method );
@@ -229,21 +231,9 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addAnnotation( "@ApiModel" );
         topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
 
-
         if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
-            topLevelClass.addAnnotation( "@IdClass(" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key)" );
+            topLevelClass.addAnnotation( "@IdClass(" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key.class)" );
         }
-        // private static final long serialVersionUID = 1L;
-
-        // 以下代码不需要调用，因为本来生成的model就带serialVersionUID
-//        Field serialVersionUID = new Field(  );
-//        serialVersionUID.setVisibility( JavaVisibility.PRIVATE );
-//        serialVersionUID.setStatic( true );
-//        serialVersionUID.setFinal( true );
-//        serialVersionUID.setType( new FullyQualifiedJavaType( "long" ) );
-//        serialVersionUID.setName( "serialVersionUID" );
-//        serialVersionUID.setInitializationString( "1L" );
-//        topLevelClass.addField( serialVersionUID );
 
         return true;
     }
