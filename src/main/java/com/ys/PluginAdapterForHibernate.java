@@ -242,7 +242,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         }
 
         if(hasDateColumn) {
-            interfaze.addImportedType( new FullyQualifiedJavaType("java.util.Data" ));
+            interfaze.addImportedType( new FullyQualifiedJavaType("java.util.Date" ));
         }
 
         return true;
