@@ -212,6 +212,8 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             method.addJavaDocLine( " * @param " +property + " " + column.getRemarks() );
             method.addJavaDocLine( " */" );
 
+            method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
+
             interfaze.addMethod( method );
         }
 
