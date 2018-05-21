@@ -205,7 +205,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
 
-            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
+            String methodName = "findAllBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
             Method method = new Method( methodName );
             method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
 
@@ -227,7 +227,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
 
-            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 ) + "In";
+            String methodName = "findAllBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 ) + "In";
             Method method = new Method( methodName );
             method.addParameter( new Parameter( new FullyQualifiedJavaType( "Collection<" +column.getFullyQualifiedJavaType().getShortName() +">" ), column.getJavaProperty() + "s") );
 
