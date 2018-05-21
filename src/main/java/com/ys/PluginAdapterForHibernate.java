@@ -210,10 +210,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         String entityKeyName = introspectedTable.getTableConfiguration().getDomainObjectName() + "Key";
 
         if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
-
-            if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
-                entityName = entityKeyName;
-            }
+            // Has Key Class
         }
         else {
             if(introspectedTable.getPrimaryKeyColumns().size() == 1) {
