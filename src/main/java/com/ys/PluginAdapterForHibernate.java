@@ -175,24 +175,36 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         interfaze.addAnnotation( "@Repository" );
 
+        String entityName = introspectedTable.getTableConfiguration().getDomainObjectName();
+        String entityKeyName = introspectedTable.getTableConfiguration().getDomainObjectName() + "Key";
+
         if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
 
             if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
-                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key," + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key>"));
-            }
-            else {
-                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "," + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key>"));
+                entityName = entityKeyName;
             }
         }
         else {
             if(introspectedTable.getPrimaryKeyColumns().size() == 1) {
 
                 IntrospectedColumn introspectedColumn = introspectedTable.getPrimaryKeyColumns().get( 0 );
-                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "," + introspectedColumn.getFullyQualifiedJavaType().getShortName()+ ">"));
+                entityKeyName = introspectedColumn.getFullyQualifiedJavaType().getShortName();
             }
             else {
-                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + ",Integer"+ ">"));
+                entityKeyName = "Integer";
             }
+        }
+
+        interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + entityName + ","+ entityKeyName +">"));
+
+        // 生成方法
+        // e.g. List<PointEntity> findByDeviceIdIn(Collection<Integer> deviceIds);
+        List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+        for(IntrospectedColumn column : allColumns) {
+            String methodName = "findBy" + column.getActualColumnName();
+            Method method = new Method( methodName );
+            method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getActualColumnName()) );
+            interfaze.addMethod( method );
         }
 
         return true;
