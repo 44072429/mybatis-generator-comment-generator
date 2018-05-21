@@ -175,7 +175,12 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 
         interfaze.addAnnotation( "@Repository" );
 
-        interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + ",Integer"+ ">"));
+        if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
+            interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "," + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key>"));
+        }
+        else {
+            interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + ",Integer"+ ">"));
+        }
 
         return true;
     }
