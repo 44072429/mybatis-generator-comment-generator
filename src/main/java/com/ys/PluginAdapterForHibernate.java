@@ -176,10 +176,23 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         interfaze.addAnnotation( "@Repository" );
 
         if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
-            interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "," + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key>"));
+
+            if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
+                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key," + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key>"));
+            }
+            else {
+                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "," + introspectedTable.getTableConfiguration().getDomainObjectName() + "Key>"));
+            }
         }
         else {
-            interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + ",Integer"+ ">"));
+            if(introspectedTable.getPrimaryKeyColumns().size() == 1) {
+
+                IntrospectedColumn introspectedColumn = introspectedTable.getPrimaryKeyColumns().get( 0 );
+                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + "," + introspectedColumn.getFullyQualifiedJavaType().getShortName()+ ">"));
+            }
+            else {
+                interfaze.addSuperInterface( new FullyQualifiedJavaType("JpaRepository<" + introspectedTable.getTableConfiguration().getDomainObjectName() + ",Integer"+ ">"));
+            }
         }
 
         return true;
