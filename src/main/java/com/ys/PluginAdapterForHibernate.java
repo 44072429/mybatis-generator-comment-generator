@@ -345,6 +345,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addJavaDocLine( "import javax.persistence.*;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
+        topLevelClass.addAnnotation( "@MappedSuperclass" );
 
 //        if(introspectedTable.getNonPrimaryKeyColumns().size() == 0) {
 //            topLevelClass.addAnnotation( "@Entity" );
