@@ -330,7 +330,12 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             field.addAnnotation( "@GeneratedValue(strategy = GenerationType.AUTO)" );
         }
 
-        field.addAnnotation( "@Column(name=\"" + introspectedColumn.getActualColumnName() + "\")" );
+        String columnName = MybatisGeneratorUtil.getColumnOverrideColumnName( introspectedTable, introspectedColumn.getActualColumnName());
+        if(columnName == null) {
+            columnName = introspectedColumn.getActualColumnName();
+        }
+
+        field.addAnnotation( "@Column(name=\"" + columnName + "\")" );
         field.addAnnotation( "@ApiModelProperty(value=\"" + introspectedColumn.getRemarks() + "\")" );
 
         return true;
