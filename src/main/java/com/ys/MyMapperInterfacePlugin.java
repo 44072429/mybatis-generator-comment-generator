@@ -38,6 +38,18 @@ public class MyMapperInterfacePlugin extends PluginAdapter {
         return true;
     }
 
+    @Override
+    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass,
+                                                 IntrospectedTable introspectedTable) {
+
+        // 当某个表有多个主键时候 会生成一个 TabUserKey的一个专门表示主键的类
+
+        topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
+        topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
+
+        topLevelClass.addAnnotation( "@ApiModel" );
+        return true;
+    }
     /**
      * 数据库每个字段被生成的时候会调用
      * @param field
