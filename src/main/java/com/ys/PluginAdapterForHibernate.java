@@ -256,7 +256,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
             Method method = new Method( methodName );
             method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
-            method.addParameter( new Parameter( new FullyQualifiedJavaType("Sort"), "sort") );
+            method.addParameter( new Parameter( new FullyQualifiedJavaType("Sort"), column.getJavaProperty() + "Sort") );
 
             method.addJavaDocLine( "/**" );
             method.addJavaDocLine( " * 数据库字段" + column.getActualColumnName() + ",属性名称" + property);
