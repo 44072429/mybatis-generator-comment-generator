@@ -11,27 +11,6 @@ import java.util.List;
  */
 public class PluginAdapterForHibernate extends PluginAdapter {
 
-    class MyRules extends ConditionalModelRules {
-
-        /**
-         * Instantiates a new conditional model rules.
-         *
-         * @param introspectedTable the introspected table
-         */
-        public MyRules(IntrospectedTable introspectedTable) {
-            super( introspectedTable );
-        }
-
-        @Override
-        public boolean generateBaseRecordClass() {
-//            return introspectedTable.hasBaseColumns()
-//                    || introspectedTable.getPrimaryKeyColumns().size() == 1
-//                    || blobsAreInBaseRecord();
-
-            return true;
-        }
-    }
-
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
         super.initialized( introspectedTable );
@@ -39,6 +18,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         introspectedTable.setRules( new MyRules(introspectedTable) );
 
     }
+
     public boolean validate(List<String> warnings) {
         return true;
     }
@@ -328,6 +308,13 @@ public class PluginAdapterForHibernate extends PluginAdapter {
             }
         }
 
+        if(primaryKeyColumns.size() == 0) {
+            // 一个表，没设置主键，默认认为名字为id的字段为主键
+            if("id".equals( introspectedColumn.getActualColumnName()) ) {
+                field.addAnnotation( "@Id" );
+            }
+        }
+
         if(introspectedColumn.isAutoIncrement()) {
             field.addAnnotation( "@GeneratedValue(strategy = GenerationType.AUTO)" );
         }
@@ -362,5 +349,26 @@ public class PluginAdapterForHibernate extends PluginAdapter {
 //        }
 
         return true;
+    }
+
+    class MyRules extends ConditionalModelRules {
+
+        /**
+         * Instantiates a new conditional model rules.
+         *
+         * @param introspectedTable the introspected table
+         */
+        public MyRules(IntrospectedTable introspectedTable) {
+            super( introspectedTable );
+        }
+
+        @Override
+        public boolean generateBaseRecordClass() {
+//            return introspectedTable.hasBaseColumns()
+//                    || introspectedTable.getPrimaryKeyColumns().size() == 1
+//                    || blobsAreInBaseRecord();
+
+            return true;
+        }
     }
 }
