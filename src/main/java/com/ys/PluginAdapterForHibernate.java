@@ -212,22 +212,25 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         for(IntrospectedColumn column : allColumns) {
             String property = column.getJavaProperty();
 
-            String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
-            Method method = new Method( methodName );
-            method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
+            if(!property.equals( "id" )) {
+                // 不生成findById,因为最新的hibernate本身带这个函数，会导致编译失败
+                String methodName = "findBy" + property.substring( 0,1 ).toUpperCase() + property.substring( 1 );
+                Method method = new Method( methodName );
+                method.addParameter( new Parameter( column.getFullyQualifiedJavaType(), column.getJavaProperty()) );
 //            method.addParameter( new Parameter( new FullyQualifiedJavaType("Sort"), column.getJavaProperty() + "Sort") );
 
-            method.addJavaDocLine( "/**" );
-            method.addJavaDocLine( " * 数据库字段" + column.getActualColumnName() + ",属性名称" + property);
-            method.addJavaDocLine( " * @param " +property + " " + column.getRemarks() );
-            method.addJavaDocLine( " */" );
+                method.addJavaDocLine( "/**" );
+                method.addJavaDocLine( " * 数据库字段" + column.getActualColumnName() + ",属性名称" + property);
+                method.addJavaDocLine( " * @param " +property + " " + column.getRemarks() );
+                method.addJavaDocLine( " */" );
 
-            method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
+                method.setReturnType( new FullyQualifiedJavaType( "List<" +entityName +">" ) );
 
-            interfaze.addMethod( method );
+                interfaze.addMethod( method );
 
-            if(column.getFullyQualifiedJavaType().getShortName().equals("Date"  )) {
-                hasDateColumn = true;
+                if(column.getFullyQualifiedJavaType().getShortName().equals("Date"  )) {
+                    hasDateColumn = true;
+                }
             }
         }
 
