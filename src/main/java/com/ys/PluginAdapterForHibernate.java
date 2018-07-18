@@ -319,7 +319,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         }
 
         if(introspectedColumn.isAutoIncrement()) {
-            field.addAnnotation( "@GeneratedValue(strategy = GenerationType.AUTO)" );
+            field.addAnnotation( "@GeneratedValue(strategy = GenerationType.IDENTITY)" );
         }
 
         String columnName = MybatisGeneratorUtil.getColumnOverrideColumnName( introspectedTable, introspectedColumn.getActualColumnName());
