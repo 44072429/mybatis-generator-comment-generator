@@ -321,6 +321,13 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         if(introspectedColumn.isAutoIncrement()) {
             field.addAnnotation( "@GeneratedValue(strategy = GenerationType.IDENTITY)" );
         }
+        else {
+            // 如果不是递增Id，且备注是uuid的话，则使用uuid自动生成
+            if(introspectedColumn.getRemarks().equals("uuid")) {
+                field.addAnnotation( "@GenericGenerator(name=\"idGenerator\", strategy=\"uuid\")" );
+                field.addAnnotation( "@GeneratedValue(generator=\"idGenerator\")" );
+            }
+        }
 
         String columnName = MybatisGeneratorUtil.getColumnOverrideColumnName( introspectedTable, introspectedColumn.getActualColumnName());
         if(columnName == null) {
