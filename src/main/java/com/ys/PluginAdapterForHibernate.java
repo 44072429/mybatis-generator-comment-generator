@@ -325,7 +325,7 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         else {
             // 如果不是递增Id，且备注是uuid的话，则使用uuid自动生成
             if(introspectedColumn.getRemarks().equals("uuid")) {
-                field.addAnnotation( "@GenericGenerator(name=\"idGenerator\", strategy=\"uuid\")" );
+                field.addAnnotation( "@GenericGenerator(name=\"idGenerator\", strategy=\"org.hibernate.id.UUIDGenerator\")" );
                 field.addAnnotation( "@GeneratedValue(generator=\"idGenerator\")" );
             }
         }
