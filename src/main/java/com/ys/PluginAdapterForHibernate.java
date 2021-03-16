@@ -277,10 +277,12 @@ public class PluginAdapterForHibernate extends PluginAdapter {
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModel;" );
         topLevelClass.addJavaDocLine( "import io.swagger.annotations.ApiModelProperty;" );
         topLevelClass.addJavaDocLine( "import org.hibernate.annotations.GenericGenerator;" );
+        topLevelClass.addJavaDocLine( "import com.fasterxml.jackson.annotation.JsonIgnoreProperties;" );
 
         topLevelClass.addJavaDocLine( "" );
         topLevelClass.addAnnotation( "@Entity" );
         topLevelClass.addAnnotation( "@ApiModel" );
+        topLevelClass.addAnnotation( "@JsonIgnoreProperties(value = { \"hibernateLazyInitializer\"})" );
         topLevelClass.addAnnotation( "@Table(name=\"" +introspectedTable.getTableConfiguration().getTableName() + "\")" );
 
         if(introspectedTable.getPrimaryKeyColumns().size() > 1) {
